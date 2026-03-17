@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { assets, jobsApplied } from '../assets/assets'
 import moment from 'moment'
 import Footer from '../components/Footer';
+import { AppContext } from '../context/appcontext'
+import axios from 'axios'
+import { toast } from "react-toastify";
+
 
 
 
@@ -11,6 +15,35 @@ const Application = () => {
 
   const [isEdit , setIsEdit] = React.useState(false)
   const [resume , setResume] = React.useState(null)
+
+  const {backendUrl,userData, userApplications, fetchUserdata, userToken}=useContext(AppContext)
+
+  const updateResume=async ()=>{
+     try {
+      const formData=new FormData()
+      formData.append('resume',resume)
+
+      const {data}= await axios.post(backendUrl+'/api/users/update-resume',
+        formData,{headers:{token: userToken}}
+      )
+
+      if (data.success){
+        toast.success(data.message)
+        await fetchUserdata()
+        
+      }else {
+        toast.error(data.message)
+      }
+      
+     } catch (error) {
+      toast.error(error.message)
+      
+     }
+     setIsEdit(false)
+     setResume(null);
+  }
+
+
   return (
     <>
     <Navbar />
@@ -18,14 +51,23 @@ const Application = () => {
      <h2 className='text-xl font-semibold'>Your Resume</h2>
      <div className='flex gap-2 mb-6 mt-3'>
    {
-    isEdit 
+    isEdit || !userData?.resume
     ? <>
-      <label className='flex items-center' htmlFor="resumeUpload">
-        <p className='bg-blue-100 text-blue-600 px-4 py-2 rounded-lg mr-2'>Select Resume</p>
-        <input id='resumeUpload' onChange={e=>setResume(e.target.files[0])} accept='application/pdf' type="file" hidden />
-        <img src={assets.profile_upload_icon} alt="" />
-      </label>
-      <button onClick={e=>setIsEdit(false)} className='bg-green-100 border border-green-400 rounded-lg px-4 py-2 ml-2'>Save</button>
+      <label className='flex items-center cursor-pointer'>
+  <p className='bg-blue-100 text-blue-600 px-4 py-2 rounded-lg mr-2'>
+    {resume ? resume.name : "Select Resume"}
+  </p>
+
+  <input
+    type="file"
+    accept="application/pdf"
+    hidden
+    onChange={(e) => setResume(e.target.files[0])}
+  />
+
+  <img src={assets.profile_upload_icon} alt="" />
+</label>
+      <button onClick={updateResume} className='bg-green-100 border border-green-400 rounded-lg px-4 py-2 ml-2 cursor-pointer'>Save</button>
     </> 
     : <div className='flex gap-2'>
       <a className='bg-blue-100 text-blue-600 px-4 py-2 rounded-lg 'href="">
@@ -50,7 +92,7 @@ const Application = () => {
         </thead>
         <tbody>
           {jobsApplied.map((job,index)=> true ? (
-                 <tr>
+                 <tr key={index}>
                   <td className='py-3 px-4 flex items-center gap-2 border-b'>
                     <img className='w-8 h-8' src={job.logo} alt="" />
                     {job.company}

@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@sentry/node": "^10.42.0",
+    "axios": "^1.13.6",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.9.0",
     "cors": "^2.8.6",
@@ -21,7 +22,8 @@
     "mongoose": "^9.2.3",
     "multer": "^2.1.0",
     "nodemon": "^3.1.14",
-    "svix": "^1.86.0"
+    "react-quill": "^0.0.2",
+    "react-toastify": "^11.0.5"
   },
   "description": ""
 }
