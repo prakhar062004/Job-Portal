@@ -1,7 +1,7 @@
 import { createContext,useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { jobsData } from "../assets/assets";
 
 
 export const AppContext = createContext();
@@ -88,6 +88,22 @@ const fetchUserdata=async ()=>{
     }
 }
 
+// function to fetch user applications
+const fetchUserApplications = async () => {
+    try {
+        const { data } = await axios.get(backendUrl + '/api/users/applications', {
+            headers: { token: userToken }
+        });
+        if (data.success) {
+            setUserApplications(data.applications);
+        } else {
+            toast.error(data.message);
+        }
+    } catch (error) {
+        toast.error(error.message);
+    }
+}
+
     useEffect(() => {
         fetchJobs()
 
@@ -113,6 +129,7 @@ const fetchUserdata=async ()=>{
     useEffect(()=>{
      if (userToken){
         fetchUserdata()
+        fetchUserApplications()
      }
     },[userToken])
 
@@ -151,7 +168,8 @@ const fetchUserdata=async ()=>{
         userApplications,
         setUserApplications,
 
-        fetchUserdata
+        fetchUserdata,
+        fetchUserApplications
     };
 
     return (

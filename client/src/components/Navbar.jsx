@@ -9,12 +9,14 @@ const Navbar = () => {
 
     const navigate=useNavigate()
 
-    const {setShowRecruiterLogin, setShowUserLogin, userData, setUserToken, setUserData}=useContext(AppContext)
+    const {setShowRecruiterLogin, setShowUserLogin, userData, setUserToken, setUserData, setUserApplications}=useContext(AppContext)
 
     const logoutUser = () => {
        setUserToken(null)
        setUserData(null)
+       setUserApplications([])
        localStorage.removeItem('userToken')
+       navigate('/')
     }
 
 
