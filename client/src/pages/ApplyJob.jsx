@@ -45,7 +45,7 @@ const ApplyJob = () => {
       return;
     }
 
-    if (!userData || !userData.resume) {
+    if (!userData.resume) {
       toast.error("Upload resume to apply");
       navigate("/application");
       return;

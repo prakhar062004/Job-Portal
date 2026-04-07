@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {manageJobsData} from '../assets/assets'
 import moment from 'moment'
 import {useNavigate} from 'react-router-dom'
 import { AppContext } from '../context/appcontext'
@@ -24,9 +23,8 @@ const Managejobs = () => {
       const {data}=await axios.get(backendUrl+'/api/company/list-jobs',
         {headers:{token:companyToken}}
       )
-      if (data.success){
+      if (data.success) {
         setJobs(data.jobsData.reverse())
-        console.log(data.jobsData);
       }
       else {
         toast.error(data.message)

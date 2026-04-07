@@ -95,7 +95,7 @@ const Recruiterlogin = () => {
           Recruiter {state}
         </h1>
 
-        <p className='text-sm'>Welcome back! Please sign in to continue</p>
+        <p className='text-sm'>{state === 'Login' ? 'Welcome back! Please sign in to continue' : 'Welcome! Please create your account'}</p>
 
 
         {/* STEP 2 : Upload Logo */}

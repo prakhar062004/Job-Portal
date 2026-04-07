@@ -23,12 +23,9 @@ app.use(express.urlencoded({ extended: true }))
 
 // Routes
 app.get('/', (req, res) => res.send("API working"))
-app.get("/debug-sentry", function mainHandler(req, res) {
-  throw new Error("My first Sentry error!");
-});
 
 app.use('/api/users', userRoutes)
-app.use('/api/jobs',jobRoutes)
+app.use('/api/jobs', jobRoutes)
 app.use('/api/company', companyRoutes)
 
 
