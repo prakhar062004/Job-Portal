@@ -16,8 +16,12 @@ const app = express()
 await connectDB()
 await connectCloudinary()
 
-//middleware
-app.use(cors())
+const allowedOrigins = [
+  'http://localhost:5173', // For local development
+  'https://job-portal-khaki-phi.vercel.app/' // Your new Vercel frontend
+];
+
+app.use(cors({ origin: allowedOrigins }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
