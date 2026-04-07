@@ -18,7 +18,8 @@ await connectCloudinary()
 
 const allowedOrigins = [
   'http://localhost:5173', // For local development
-  'https://job-portal-khaki-phi.vercel.app/' // Your new Vercel frontend
+  'https://job-portal-khaki-phi.vercel.app', 
+  'https://job-portal-khaki-phi.vercel.app/'
 ];
 
 app.use(cors({ origin: allowedOrigins }))
