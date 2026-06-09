@@ -59,10 +59,19 @@ const fetchCompanydata= async()=>{
         setcompanyData(data.company)
     } else {
         toast.error(data.message)
+        if (data.message === "jwt expired" || data.message === "Not authorised login again" || data.message === "Company not found" || data.message === "Company not found, please login again") {
+            setcompanyToken(null)
+            localStorage.removeItem('companyToken')
+            setcompanyData(null)
+        }
     }
    } catch (error) {
     toast.error(error.message)
-    
+    if (error.response?.data?.message === "jwt expired" || error.response?.data?.message === "Not authorised login again" || error.response?.status === 401 || error.response?.status === 403) {
+        setcompanyToken(null)
+        localStorage.removeItem('companyToken')
+        setcompanyData(null)
+    }
    }
 }
 // function to fetch user data
@@ -77,11 +86,20 @@ const fetchUserdata=async ()=>{
         setUserData(data.user)
     }else{
         toast.error(data.message)
+        if (data.message === "jwt expired" || data.message === "Not authorised login again" || data.message === "User not found" || data.message === "User not found, please login again") {
+            setUserToken(null)
+            localStorage.removeItem('userToken')
+            setUserData(null)
+        }
     }
 
     } catch (error) {
         toast.error(error.message)
-        
+        if (error.response?.data?.message === "jwt expired" || error.response?.data?.message === "Not authorised login again" || error.response?.status === 401 || error.response?.status === 403 || error.response?.data?.message === "User not found" || error.response?.data?.message === "User not found, please login again") {
+            setUserToken(null)
+            localStorage.removeItem('userToken')
+            setUserData(null)
+        }
     }
 }
 
@@ -95,9 +113,19 @@ const fetchUserApplications = async () => {
             setUserApplications(data.applications);
         } else {
             toast.error(data.message);
+            if (data.message === "jwt expired" || data.message === "Not authorised login again" || data.message === "User not found" || data.message === "User not found, please login again") {
+                setUserToken(null);
+                localStorage.removeItem('userToken');
+                setUserData(null);
+            }
         }
     } catch (error) {
         toast.error(error.message);
+        if (error.response?.data?.message === "jwt expired" || error.response?.data?.message === "Not authorised login again" || error.response?.status === 401 || error.response?.status === 403) {
+            setUserToken(null);
+            localStorage.removeItem('userToken');
+            setUserData(null);
+        }
     }
 }
 

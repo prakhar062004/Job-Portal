@@ -16,6 +16,10 @@ export const protectCompany = async (req, res, next) => {
 
         req.company = await Company.findById(decoded.id).select("-password")
 
+        if (!req.company) {
+            return res.json({ success: false, message: "Company not found, please login again" })
+        }
+
         next()
 
     } catch (error) {
@@ -35,6 +39,9 @@ export const protectUser = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         req.user = await User.findById(decoded.id).select("-password")
+        if (!req.user) {
+            return res.json({ success: false, message: "User not found, please login again" })
+        }
         next()
     } catch (error) {
         res.json({ success: false, message: error.message })
