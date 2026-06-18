@@ -87,11 +87,11 @@ npm start
 
 ## Future Improvements
 
-- Resume Upload
 - Email Notifications
 - Advanced Job Recommendations
 - Interview Scheduling
 - Admin Dashboard
+- Infinite Job scrolling
 
 ## Author
 
